@@ -6,6 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "bshaffer/oauth2-server-php": "^1.10",
+        "doctrine/doctrine-bundle": "*",
         "sensio/framework-extra-bundle": "^5.4",
         "symfony/console": "3.4.*",
         "symfony/dotenv": "3.4.*",

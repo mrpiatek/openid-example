@@ -10,6 +10,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class ResourceController extends Controller
 {
     /**
+     * @Route("/", name="home")
+     */
+    public function home(): Response
+    {
+        return $this->render('home.html.twig');
+    }
+
+    /**
      * @Route("/admin", name="admin")
      */
     public function admin(): Response
