@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use OAuth2\Encryption\Jwt;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -29,13 +30,18 @@ class ClientController extends Controller
 //                    'client_id' => testclient
                     'grant_type'=>'authorization_code',
                     'code' => $code,
-                    'redirect_uri' => 'http://caddy:8080/client'
+                    'redirect_uri' => 'http://caddy:8080/client',
+                    'scope' => 'openid'
                 ]
             ]);
 
-            return new Response($res->getBody());
+            $response = \json_decode($res->getBody(), true);
+
+            $jwt = new Jwt();
+            dump($jwt->decode($response['id_token'], file_get_contents('/srv/app/config/jwt.pub')));
+            return new Response();
         } else {
-            return new RedirectResponse("http://caddy:8080/auth?client_id={$clientId}&response_type=code&state=asd&redirect_uri=http://caddy:8080/client");
+            return new RedirectResponse("http://caddy:8080/auth?client_id={$clientId}&response_type=code&state=asd&redirect_uri=http://caddy:8080/client&scope=openid");
         }
     }
 }
